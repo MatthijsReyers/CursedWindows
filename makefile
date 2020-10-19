@@ -1,0 +1,7 @@
+
+
+main:
+	
+
+setup:
+	mkdir obj
