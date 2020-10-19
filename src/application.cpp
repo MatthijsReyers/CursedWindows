@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <locale.h>
+#include <iostream>
 
 namespace cw
 {
