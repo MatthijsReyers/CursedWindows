@@ -1,36 +1,37 @@
 #pragma once
 
 #include <utility>
+#include <functional>
 #include <stdint.h>
 
 namespace cw
 {
-    class widget
+    class Widget
     {
     public:
         // All drawing related code should be put in here
         // ====================================================================
-        virtual void onDraw();
+        std::function<void()> onDraw();
 
         // Mouse related events.
         // ====================================================================
-        virtual void onMouseUp();
-        virtual void onMouseMove();
-        virtual void onMouseDown();
+        std::function<void()> onMouseUp();
+        std::function<void()> onMouseMove();
+        std::function<void()> onMouseDown();
 
         // Note overwriting any of the below functions will cause onKey() not
         // to be called for that key.
         // ====================================================================
-        virtual void onKey();
-        virtual void onKeyHome();
-        virtual void onKeyArrow();
-        virtual void onKeyEscape();
-        virtual void onKeyDelete();
-        virtual void onKeyTab();
+        std::function<void()> onKey();
+        std::function<void()> onKeyHome();
+        std::function<void()> onKeyArrow();
+        std::function<void()> onKeyEscape();
+        std::function<void()> onKeyDelete();
+        std::function<void()> onKeyTab();
 
         // Should be called automatically by the parent layout.
         // ====================================================================
-        virtual void onResize(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+        std::function<void()> onResize(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
         // Note that setPosition is meant to be called by the parent layout and
         // should only manually be called if the widget is in a free layout.
@@ -49,9 +50,7 @@ namespace cw
         uint16_t getHeight() const;
     
     protected:
-
-    private:
-        bool running = false;
-
+        uint16_t posX, posY;
+        uint16_t width, height;
     };
 }
