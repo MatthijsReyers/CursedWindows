@@ -46,6 +46,7 @@ namespace cw
     {
         if (x >= this->width || y >= this->height)
             throw InvalidWidgetPlacement("Cannot place widget outside of grid.");
-        
+
+        widgets[x][y]
     }
 }
