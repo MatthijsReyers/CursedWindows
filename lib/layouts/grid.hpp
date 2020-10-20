@@ -4,10 +4,12 @@
 #include "../widget.hpp"
 #include "../layout.hpp"
 
+#include <stdint.h>
+
 #include <utility>
 #include <functional>
 #include <vector>
-#include <stdint.h>
+#include <memory>
 
 namespace cw
 {
@@ -28,16 +30,22 @@ namespace cw
         void setHorizontalGap(uint16_t hGap);
         void setVerticalGap(uint16_t vGap);
 
-        void addWidget(Widget& widget);
-        void addWidget(Widget& widget, uint16_t x, uint16_t y);
-        Widget& getWidget(uint16_t x, uint16_t y);
-        void deleteWidget(uint16_t x, uint16_t y);
-    
+        void addWidget(std::shared_ptr<Widget> widget);
+        void addWidget(std::shared_ptr<Widget> widget, uint16_t x, uint16_t y);
+        Widget& getWidget(uint16_t x, uint16_t y) const noexcept;
+        void deleteWidget(uint16_t x, uint16_t y) noexcept;
+
+        virtual void resize(uint16_t x, uint16_t y, uint16_t w, uint16_t h) override;
+
     protected:
         uint16_t rows, columns;
         uint16_t horizontalGap, verticalGap;
-        std::vector<std::vector<Widget&>> widgets;
-        Widget& activeWidget;
+
+        std::vector<std::vector<std::shared_ptr<Widget>>> widgets;
+        std::weak_ptr<Widget> activeWidget;
+
+        // Method called whenever the dimensions of the grid change.
+        virtual void resizeGrid() noexcept;
 
     private:
 
