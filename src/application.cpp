@@ -7,7 +7,7 @@
 
 namespace cw
 {
-    int application::start()
+    application::application()
     {
         // Setup nCurses.
         setlocale(LC_ALL, "");
@@ -32,9 +32,12 @@ namespace cw
             init_pair(8, 7, -1);	// WHITE
             init_pair(9, COLOR_BLACK, COLOR_WHITE); // CURSOR
         }
+    }
 
+    int application::start()
+    {
         try {
-            running = true;
+            this->running = true;
             while (this->running)
             {
                 this->run();
@@ -45,5 +48,13 @@ namespace cw
             std::cout << err << std::endl;
             this->quit();
         }
+
+        return this->exitcode;
+    }
+
+    void application::quit(int e = 0)
+    {
+        this->exitcode = e;
+        this->running = false;
     }
 }
