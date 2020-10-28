@@ -3,37 +3,43 @@
 # CXXFLAGS = -xc++ -Wall -shared-libgcc -lncursesw -O3
 # LIBFILE = cursedwindows.dll
 
+CC = gcc
 CXX = g++
-CXXFLAGS = -xc++ -Wall -shared-libgcc -lncursesw -O3
-LIBFILE = cursedwindows
+CXXFLAGS = -lncursesw -fPIC
+CCFLAGS = -lncursesw -fPIC
 
-EXECNAME = cursedwindows
+LIBNAME = libcursedwindows
 
 HEADERFOLDER = lib
 SOURCEFOLDER = src
 OBJECTFOLDER = obj
 OUTPUTFOLDER = bin
 
-CXXFLAGS += -I $(HEADERFOLDER)
+CXXFLAGS += -I $(HEADERFOLDER) 
+ARFLAGS = rcs
 
 SOURCES := $(shell find $(SOURCEFOLDER) | grep -F ".cpp")
 OBJECTS := $(patsubst $(SOURCEFOLDER)%.cpp,$(OBJECTFOLDER)%.o,$(SOURCES))
 
 
-# setup:
-# 	mkdir obj
-
-# $(EXECNAME): $(OBJECTS)
+$(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.c
+	$(CC) $(CCFLAGS) -c -o $@ $<
 
 $(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.c
-	$(CXX) $(CXXFLAGS) -o $@ $<
+staticlib: $(OBJECTS)
+	ar ${ARFLAGS} $(OUTPUTFOLDER)/$(LIBNAME).a $(OBJECTS)
 
-main: $(OBJECTS)
-	echo $(OBJECTS)
+sharedlib: $(OBJECTS)
+	$(CXX) $(CXXFLAGS) -shared $(OBJECTS) -o $(OUTPUTFOLDER)/$(LIBNAME).so
 
 setup:
 	mkdir -p $(OBJECTFOLDER) $(OUTPUTFOLDER)
-	mkdir -p obj/layouts
+	mkdir -p obj/layouts obj/widgets
+
+clean:
+	rm -rf obj/*.o
+	rm -rf obj/*/*.o
+	rm -rf obj/*/*/*.o
+	rm -rf obj/*/*/*/*.o

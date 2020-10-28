@@ -9,5 +9,5 @@ namespace cw
     public:
         EmptyWidget();
         
-    }
+    };
 }

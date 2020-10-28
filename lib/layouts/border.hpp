@@ -3,7 +3,7 @@
 #include "../errors.hpp"
 #include "../widget.hpp"
 #include "../layout.hpp"
-#include "../border.hpp"
+#include "../borders.hpp"
 
 #include <stdint.h>
 
@@ -30,7 +30,7 @@ namespace cw
 
     protected:
         std::shared_ptr<Widget> widget;
-        Border border = DoubleBorder;
+        Border border = DoubleBorder();
 
     private:
 

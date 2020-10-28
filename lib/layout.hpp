@@ -15,7 +15,6 @@ namespace cw
     protected:
 
     private:
-        bool running = false;
 
     };
 }

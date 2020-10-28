@@ -22,10 +22,10 @@ namespace cw
         return this->widget;
     }
 
-    void BorderLayout::setBorder(Border border)
-    {
-        this->border = border;
-    }
+    // void BorderLayout::setBorder(Border border)
+    // {
+    //     this->border = border;
+    // }
 
     Border BorderLayout::getBorder() const noexcept
     {
@@ -55,21 +55,21 @@ namespace cw
     void BorderLayout::draw()
     {
         // Placing the corners.
-        mvaddstr(this->posX, this->posY, this->border.cornerTL);
-        mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerTR);
-        mvaddstr(this->posX, this->posY - this->height - 1, this->border.cornerBL);
-        mvaddstr(this->posX - this->width - 1, this->posY - this->height - 1, this->border.cornerBR);
+        mvaddstr(this->posX, this->posY, this->border.cornerTL.c_str());
+        mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerTR.c_str());
+        mvaddstr(this->posX, this->posY - this->height - 1, this->border.cornerBL.c_str());
+        mvaddstr(this->posX - this->width - 1, this->posY - this->height - 1, this->border.cornerBR.c_str());
 
         // Placing the straight horizontal borders.
         for (uint16_t x = 0; x < this->width; x++) {
-            mvaddstr(this->posX + x, this->posY, this->border.horizontal);
-            mvaddstr(this->posX + x, this->posY + this->height - 1, this->border.horizontal);
+            mvaddstr(this->posX + x, this->posY, this->border.horizontal.c_str());
+            mvaddstr(this->posX + x, this->posY + this->height - 1, this->border.horizontal.c_str());
         }
 
         // Placing the straight vertical borders.
         for (uint16_t y = 0; y < this->height; y++) {
-            mvaddstr(this->posX, this->posY + y, this->border.horizontal);
-            mvaddstr(this->posX + this->height - 1, this->posY + y, this->border.horizontal);
+            mvaddstr(this->posX, this->posY + y, this->border.horizontal.c_str());
+            mvaddstr(this->posX + this->height - 1, this->posY + y, this->border.horizontal.c_str());
         }
         
         // Draw widget

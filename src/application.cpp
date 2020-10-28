@@ -38,6 +38,7 @@ namespace cw
     {
         try {
             this->running = true;
+            this->mainWidget->draw();
             while (this->running)
             {
                 this->run();
@@ -46,15 +47,25 @@ namespace cw
         }
         catch (char* err) {
             std::cout << err << std::endl;
-            this->quit();
+            this->quit(1);
         }
 
         return this->exitcode;
     }
 
-    void application::quit(int e = 0)
+    void application::quit(int code /* = 0 */)
     {
-        this->exitcode = e;
+        this->exitcode = code;
         this->running = false;
+    }
+
+    void application::setMainWidget(std::shared_ptr<Widget> widget)
+    {
+        this->mainWidget = widget;
+    }
+
+    std::shared_ptr<Widget> application::getMainWidget()
+    {
+        return this->mainWidget;
     }
 }
