@@ -1,6 +1,3 @@
-[submodule "deps/deps"]
-	path = deps/deps
-	url = https://github.com/wmcbrine/PDCurses
 [submodule "deps/PDCurses"]
 	path = deps/PDCurses
 	url = https://github.com/wmcbrine/PDCurses

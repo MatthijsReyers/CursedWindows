@@ -1,6 +1,7 @@
 
 CXX = g++
-CXXFLAGS = -lncursesw 
+# CXXFLAGS = -lncursesw 
+CXXFLAGS = -lncurses
 
 HEADERFOLDER = src
 SOURCEFOLDER = src
@@ -14,7 +15,7 @@ OBJECTS := $(patsubst $(SOURCEFOLDER)%.cpp,$(OBJECTFOLDER)%.o,$(SOURCES))
 
 EXECNAME = textbox
 
-main: $(OBJECTS)
+main: setup $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(OUTPUTFOLDER)/$(EXECNAME)
 
 $(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.c

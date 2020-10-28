@@ -5,7 +5,7 @@
 
 CC = gcc
 CXX = g++
-CXXFLAGS = -lncursesw -fPIC
+CXXFLAGS = -lncurses -fPIC
 CCFLAGS = -lncursesw -fPIC
 
 LIBNAME = libcursedwindows
