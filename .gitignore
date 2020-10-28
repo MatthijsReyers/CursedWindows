@@ -1,1 +1,8 @@
 .vscode
+
+# Object files
+*.o
+
+# Compile output folders.
+bin/
+obj/

@@ -39,7 +39,8 @@ setup:
 	mkdir -p obj/layouts obj/widgets
 
 clean:
-	rm -rf obj/*.o
-	rm -rf obj/*/*.o
-	rm -rf obj/*/*/*.o
-	rm -rf obj/*/*/*/*.o
+	rm -rf $(OUTPUTFOLDER)/*
+	rm -rf $(OBJECTFOLDER)/*.o
+	rm -rf $(OBJECTFOLDER)/*/*.o
+	rm -rf $(OBJECTFOLDER)/*/*/*.o
+	rm -rf $(OBJECTFOLDER)/*/*/*/*.o
