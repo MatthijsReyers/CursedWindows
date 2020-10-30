@@ -10,3 +10,6 @@ obj/
 # CMake related files.
 CMakeCache.txt
 CmakeFiles/
+
+# Doxygen/documentation related files/folders.
+doc/
