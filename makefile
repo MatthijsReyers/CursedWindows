@@ -34,6 +34,9 @@ staticlib: $(OBJECTS)
 sharedlib: $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -shared $(OBJECTS) -o $(OUTPUTFOLDER)/$(LIBNAME).so
 
+documentation:
+	doxygen doxygen.config
+
 setup:
 	mkdir -p $(OBJECTFOLDER) $(OUTPUTFOLDER)
 	mkdir -p obj/layouts obj/widgets
@@ -44,3 +47,4 @@ clean:
 	rm -rf $(OBJECTFOLDER)/*/*.o
 	rm -rf $(OBJECTFOLDER)/*/*/*.o
 	rm -rf $(OBJECTFOLDER)/*/*/*/*.o
+
