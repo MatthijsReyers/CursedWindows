@@ -6,3 +6,7 @@
 # Compile output folders.
 bin/
 obj/
+
+# CMake related files.
+CMakeCache.txt
+CmakeFiles/
