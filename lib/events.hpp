@@ -1,0 +1,8 @@
+
+namespace cw
+{
+    class Event
+    {
+        
+    };
+}

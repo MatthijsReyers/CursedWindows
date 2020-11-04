@@ -7,6 +7,9 @@
 
 namespace cw
 {
+    /**
+     * Contains all setup code needed for ncurses
+     */
     application::application()
     {
         // Setup nCurses.

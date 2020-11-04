@@ -30,7 +30,7 @@ namespace cw
         void setHorizontalGap(uint16_t hGap);
         void setVerticalGap(uint16_t vGap);
 
-        void addWidget(std::shared_ptr<Widget> widget);
+        virtual void addWidget(std::shared_ptr<Widget> widget) override;
         void addWidget(std::shared_ptr<Widget> widget, uint16_t x, uint16_t y);
         Widget& getWidget(uint16_t x, uint16_t y) const noexcept;
         void deleteWidget(uint16_t x, uint16_t y) noexcept;

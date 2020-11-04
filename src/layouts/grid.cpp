@@ -32,9 +32,18 @@ namespace cw
     void GridLayout::setVerticalGap(uint16_t vGap)
         {this->verticalGap = vGap; this->resizeGrid();}
 
+    /**
+     * Automatically adds the widget to an empty space in the grid. The method
+     * will start searching at the lower coordinates first so widgets are placed
+     * from left to right and top to bottom. 
+     * 
+     * @throws cw::InvalidWidgetPlacement is thrown when there are no more free
+     *      spaces (= EmptyWidget instances) in the grid.
+     */
     void GridLayout::addWidget(std::shared_ptr<Widget> widget)
     {
         // TODO:
+       
         
         // Could not find an empty widget to replace.
         throw InvalidWidgetPlacement("No space left in grid layout for widget.");
@@ -48,8 +57,8 @@ namespace cw
      * @param [widget] shared pointer of widget to place at coordinates.
      * @param [x,y] coordinates of widget to delete.
      * 
-     * @throws cw::InvalidWidgetPlacement when provided coordinates are outside
-     *      the area/size of the grid.
+     * @throws cw::InvalidWidgetPlacement is thrown when the provided coordinates 
+     *      are outside the area/coordinate system of the grid.
      */
     void GridLayout::addWidget(std::shared_ptr<Widget> widget, uint16_t x, uint16_t y)
     {
@@ -67,7 +76,7 @@ namespace cw
      * coordinates outside the grid will not cause any exceptions or modifications
      * to the Layout.
      * 
-     * @param x,y coordinates of widget to delete.
+     * @param [x,y] coordinates of widget to delete.
      */
     void GridLayout::deleteWidget(uint16_t x, uint16_t y) noexcept
     {
