@@ -9,7 +9,8 @@ CC = gcc
 CXX = g++
 CXXFLAGS = -lncurses -fPIC
 CCFLAGS = -lncursesw -fPIC
-INSTALLFOLDER = /lib
+INCLUDESINSTALLFOLDER = /usr/include
+LIBRARYINSTALLFOLDER = /lib
 
 STATICLIBNAME = libcursedwindows.a
 SHAREDLIBNAME = libcursedwindows.so
@@ -51,10 +52,12 @@ documentation:
 	firefox doc/index.html
 
 install:
-	sudo cp $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(INSTALLFOLDER)/$(SHAREDLIBNAME)
+	sudo cp -r $(HEADERFOLDER) $(INCLUDESINSTALLFOLDER)/cursedwindows
+	sudo cp $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
 
 uninstall:
-	sudo rm -rf $(INSTALLFOLDER)/$(SHAREDLIBNAME)
+	sudo rm -rf $(INCLUDESINSTALLFOLDER)/cursedwindows
+	sudo rm -rf $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
 
 setup:
 	mkdir -p $(OBJECTFOLDER) $(OUTPUTFOLDER)

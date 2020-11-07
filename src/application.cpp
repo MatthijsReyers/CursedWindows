@@ -44,9 +44,15 @@ namespace cw
             this->mainWidget->draw();
             while (this->running)
             {
+                // Get raw ncurses input.
+                int rawInput = getch();
+
                 this->run();
+
+                // Do all the drawing stuff.
+                this->mainWidget->draw();
+                // refresh();
             }
-            
         }
         catch (char* err) {
             std::cout << err << std::endl;

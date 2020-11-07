@@ -30,7 +30,7 @@ namespace cw
         void setHorizontalGap(uint16_t hGap);
         void setVerticalGap(uint16_t vGap);
 
-        virtual void addWidget(std::shared_ptr<Widget> widget) override;
+        void addWidget(std::shared_ptr<Widget> widget);
         void addWidget(std::shared_ptr<Widget> widget, uint16_t x, uint16_t y);
         Widget& getWidget(uint16_t x, uint16_t y) const noexcept;
         void deleteWidget(uint16_t x, uint16_t y) noexcept;
@@ -44,7 +44,7 @@ namespace cw
         std::vector<std::vector<std::shared_ptr<Widget>>> widgets;
         std::weak_ptr<Widget> activeWidget;
 
-        // Method called whenever the dimensions of the grid change.
+        // Internal method called whenever the dimensions of the grid change.
         virtual void resizeGrid() noexcept;
 
     private:

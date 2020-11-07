@@ -1,56 +1,55 @@
 #pragma once
 
 #include <string>
+#include <ncurses.h>
 
 namespace cw
 {
     class Border
     {
     public:
+        std::string cornerTL;
+        std::string cornerBL;
+        std::string cornerTR;
+        std::string cornerBR;
+
+        std::string horizontal;
+        std::string vertical;
+
         Border() = default;
-        Border(const Border&) = default;
-        Border& operator=(const Border&) = default;
-
-        const std::string cornerTL;
-        const std::string cornerBL;
-        const std::string cornerTR;
-        const std::string cornerBR;
-
-        const std::string horizontal;
-        const std::string vertical;
     };
     
     class DoubleBorder : public Border
     {
     public:
-        DoubleBorder() = default;
         DoubleBorder(const DoubleBorder&) = default;
         DoubleBorder& operator=(const DoubleBorder&) = default;
-
-        const std::string cornerTL = "╔";
-        const std::string cornerBL = "╚";
-        const std::string cornerTR = "╗";
-        const std::string cornerBR = "╝";
-
-        const std::string horizontal = "═";
-        const std::string vertical = "║";
-
+        DoubleBorder() {
+            cornerTL = "╔";
+            cornerBL = "╚";
+            cornerTR = "╗";
+            cornerBR = "╝";
+            
+            horizontal = "═";
+            vertical = "║";
+        }
     };
 
-    class SingleBorder
+    class SingleBorder : public Border
     {
     public:
-        SingleBorder() = default;
         SingleBorder(const SingleBorder&) = default;
         SingleBorder& operator=(const SingleBorder&) = default;
-
-        const std::string cornerTL = "┌";
-        const std::string cornerBL = "└";
-        const std::string cornerTR = "┐";
-        const std::string cornerBR = "┘";
-
-        const std::string horizontal = "─";
-        const std::string vertical = "│";
-
+        SingleBorder() {
+            cornerTL = "┌";
+            cornerBL = "└";
+            cornerTR = "┐";
+            cornerBR = "┘";
+            
+            horizontal = "─";
+            vertical = "│";
+        }
     };
 }
+
+#include "iostream"

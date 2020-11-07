@@ -4,6 +4,17 @@
 
 #include "ncurses.h"
 
+#include <sstream>
+#include <string>
+#include <iostream>
+
+const char* autoToStr(int input)
+{
+    std::stringstream ss;
+    ss << input;
+    return (ss.str().c_str());
+}
+
 namespace cw
 {
     BorderLayout::BorderLayout()
@@ -22,10 +33,10 @@ namespace cw
         return this->widget;
     }
 
-    // void BorderLayout::setBorder(Border border)
-    // {
-    //     this->border = border;
-    // }
+    void BorderLayout::setBorder(Border border)
+    {
+        // this->border = border;
+    }
 
     Border BorderLayout::getBorder() const noexcept
     {
@@ -57,6 +68,7 @@ namespace cw
         // Placing the corners.
         mvaddstr(this->posX, this->posY, this->border.cornerTL.c_str());
         mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerTR.c_str());
+        mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerBL.c_str());
         mvaddstr(this->posX, this->posY - this->height - 1, this->border.cornerBL.c_str());
         mvaddstr(this->posX - this->width - 1, this->posY - this->height - 1, this->border.cornerBR.c_str());
 
@@ -74,5 +86,7 @@ namespace cw
         
         // Draw widget
         if (this->widget) this->widget->draw();
+
+        refresh();
     }
 }

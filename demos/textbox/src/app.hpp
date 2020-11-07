@@ -1,7 +1,9 @@
 
-#include <application.hpp>
-#include <layouts/border.hpp>
+#include <cursedwindows/application.hpp>
+#include <cursedwindows/layouts/border.hpp>
+
 #include <memory>
+#include <ncurses.h>
 
 class TextBoxApp : public cw::application
 {
@@ -21,5 +23,5 @@ TextBoxApp::TextBoxApp()
 
 void TextBoxApp::run()
 {
-    // TODO: subscribe to key event and close window upon pressing button.
+    
 }
