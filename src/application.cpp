@@ -40,7 +40,10 @@ namespace cw
     int application::start()
     {
         try {
+            int x, y;
+            getmaxyx(stdscr, x, y);
             this->running = true;
+            this->mainWidget->resize(0,0,x,y);
             this->mainWidget->draw();
             while (this->running)
             {

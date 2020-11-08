@@ -65,25 +65,24 @@ namespace cw
 
     void BorderLayout::draw()
     {
-        // Placing the corners.
-        mvaddstr(this->posX, this->posY, this->border.cornerTL.c_str());
-        mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerTR.c_str());
-        mvaddstr(this->posX - this->width - 1, this->posY, this->border.cornerBL.c_str());
-        mvaddstr(this->posX, this->posY - this->height - 1, this->border.cornerBL.c_str());
-        mvaddstr(this->posX - this->width - 1, this->posY - this->height - 1, this->border.cornerBR.c_str());
+        // Placing the straight vertical borders.
+        for (uint16_t x = 1; x < this->width - 1; x++) {
+            mvaddstr(this->posX + x, this->posY, this->border.vertical.c_str());
+            mvaddstr(this->posX + x, this->posY + this->height - 1, this->border.vertical.c_str());
+        }
 
         // Placing the straight horizontal borders.
-        for (uint16_t x = 0; x < this->width; x++) {
-            mvaddstr(this->posX + x, this->posY, this->border.horizontal.c_str());
-            mvaddstr(this->posX + x, this->posY + this->height - 1, this->border.horizontal.c_str());
-        }
-
-        // Placing the straight vertical borders.
-        for (uint16_t y = 0; y < this->height; y++) {
+        for (uint16_t y = 1; y < this->height - 1; y++) {
             mvaddstr(this->posX, this->posY + y, this->border.horizontal.c_str());
-            mvaddstr(this->posX + this->height - 1, this->posY + y, this->border.horizontal.c_str());
+            mvaddstr(this->posX + this->width - 1, this->posY + y, this->border.horizontal.c_str());
         }
         
+        // Placing the corners.
+        mvaddstr(this->posX, this->posY, this->border.cornerTL.c_str());
+        mvaddstr(this->posX + this->width - 1, this->posY, this->border.cornerBL.c_str());
+        mvaddstr(this->posX, this->posY + this->height - 1, this->border.cornerTR.c_str());
+        mvaddstr(this->posX + this->width - 1, this->posY + this->height - 1, this->border.cornerBR.c_str());
+
         // Draw widget
         if (this->widget) this->widget->draw();
 
