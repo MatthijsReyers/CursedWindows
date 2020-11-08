@@ -51,5 +51,3 @@ namespace cw
         }
     };
 }
-
-#include "iostream"
