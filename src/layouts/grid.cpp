@@ -1,5 +1,6 @@
 
 #include "layouts/grid.hpp"
+#include "widgets/empty.hpp"
 
 namespace cw
 {
@@ -65,9 +66,19 @@ namespace cw
         if (x >= this->columns || y >= this->rows)
             throw InvalidWidgetPlacement("Cannot place widget outside of grid.");
         
-        // The onGridResize method ensures that the matrix is always the size
-        // of the grid, so there is no need to check if the x,y coordinates exist.
+        // Add widget pointer to widget matrix.
         this->widgets[x][y] = widget;
+
+        // Calculate the size of the grid elements
+        int element_height = (this->height - this->verticalGap*(this->rows-1)) / this->rows;
+        int element_width = (this->width - this->horizontalGap*(this->columns-1)) / this->columns;
+
+        // Update widget size/location.
+        widget->resize(
+            this->posX + this->horizontalGap*x + element_width*x,
+            this->posY + this->verticalGap*y + element_height*y,
+            element_width, element_height
+        );
     }
 
     /**
@@ -105,15 +116,30 @@ namespace cw
             this->widgets.pop_back();
 
         // Do the same for each column vector.
-        for (auto column : this->widgets)
+        for (auto &column : this->widgets)
         {
             // Lengthen vector with empty widgets if needed.
             while (column.size() < this->rows)
-                column.push_back(std::make_shared<Widget>());
+                column.push_back(std::make_shared<EmptyWidget>());
 
             // Shorten vector if needed.
             while (column.size() > this->rows)
                 column.pop_back();
+        }
+
+        // Calculate the size of the grid elements
+        int element_height = (this->height - this->verticalGap*(this->rows-1)) / this->rows;
+        int element_width = (this->width - this->horizontalGap*(this->columns-1)) / this->columns;
+
+        // Resize all grid elements.
+        for (uint16_t x = 0; x < this->columns; x++)
+        for (uint16_t y = 0; y < this->rows; y++)
+        {
+            this->widgets[x][y]->resize(
+                this->posX + this->horizontalGap*x + element_width*x,
+                this->posY + this->verticalGap*y + element_height*y,
+                element_width, element_height
+            );
         }
     }
 
@@ -136,5 +162,12 @@ namespace cw
 
         // Check and call the draw callback if specified.
         if (this->onDraw) this->onDraw();
+    }
+
+    void GridLayout::draw()
+    {
+        for (uint16_t x = 0; x < this->columns; x++)
+            for (uint16_t y = 0; y < this->rows; y++)
+                this->widgets[x][y]->draw();
     }
 }

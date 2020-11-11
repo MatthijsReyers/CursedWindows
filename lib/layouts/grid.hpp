@@ -36,6 +36,7 @@ namespace cw
         void deleteWidget(uint16_t x, uint16_t y) noexcept;
 
         virtual void resize(uint16_t x, uint16_t y, uint16_t w, uint16_t h) override;
+        virtual void draw() override;
 
     protected:
         uint16_t rows, columns;
