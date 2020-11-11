@@ -7,8 +7,8 @@ VERSION = 0.1
 
 CC = gcc
 CXX = g++
-CXXFLAGS = -lncurses -fPIC
-CCFLAGS = -lncursesw -fPIC
+CXXFLAGS = -g -lncurses -fPIC
+CCFLAGS = -g -lncursesw -fPIC
 INCLUDESINSTALLFOLDER = /usr/include
 LIBRARYINSTALLFOLDER = /lib
 
