@@ -50,11 +50,24 @@ namespace cw
                 // Get raw ncurses input.
                 int rawInput = getch();
 
+                // 
                 this->run();
 
+                switch (rawInput)
+                {
+                case KEY_RESIZE:
+                    getmaxyx(stdscr, x, y);
+                    this->mainWidget->resize(0,0,x,y);
+                    break;
+                
+                default:
+                    break;
+                }
+
                 // Do all the drawing stuff.
+                clear();
                 this->mainWidget->draw();
-                // refresh();
+                refresh();
             }
         }
         catch (char* err) {
