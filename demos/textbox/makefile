@@ -8,7 +8,7 @@ SOURCEFOLDER = src
 OBJECTFOLDER = obj
 OUTPUTFOLDER = bin
 
-CXXFLAGS += -I $(HEADERFOLDER) -I./../../lib -L./../../bin/ -lcursedwindows
+CXXFLAGS += -g -I $(HEADERFOLDER) -I./../../lib -L./../../bin/ -lcursedwindows
 
 SOURCES := $(shell find $(SOURCEFOLDER) | grep -F ".cpp")
 OBJECTS := $(patsubst $(SOURCEFOLDER)%.cpp,$(OBJECTFOLDER)%.o,$(SOURCES))
