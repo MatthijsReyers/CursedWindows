@@ -1,26 +1,55 @@
 
 VERSION = 0.1
 
-# CXX = g++
-# CXXFLAGS = -xc++ -Wall -shared-libgcc -lncursesw -O3
-# SHAREDLIBNAME = cursedwindows.dll
+# Windows specific options. (Change to whatever compiler you use).
+# =============================================================================
+ifeq ($(OS),Windows_NT)
+	SUDO = runas /profile
 
-CC = gcc
-CXX = g++
-CXXFLAGS = -g -lncurses -fPIC
-CCFLAGS = -g -lncursesw -fPIC
-INCLUDESINSTALLFOLDER = /usr/include
-LIBRARYINSTALLFOLDER = /lib
+	AR = ar.exe
+	CXX = g++.exe
+	CXXFLAGS = -lpdcurses
+	CXXFLAGS += -I"C:\Program Files (x86)\mingw64\mingw64\include"
+	
+	INCLUDESINSTALLFOLDER = "C:\Program Files\Git\include"
+	LIBRARYINSTALLFOLDER = "C:\Program Files (x86)\mingw64\mingw64\lib"
 
-STATICLIBNAME = libcursedwindows.a
-SHAREDLIBNAME = libcursedwindows.so
+	STATICLIBNAME = cursedwindows.lib
+	SHAREDLIBNAME = cursedwindows.dll
+endif 
 
+# Linux specific options.
+# =============================================================================
+ifeq ($(shell uname -s),Linux)
+	SUDO = sudo
+
+	AR = ar
+	CXX = g++
+	CXXFLAGS = -lncurses -fPIC
+	INCLUDESINSTALLFOLDER = "C:\Program Files (x86)\mingw64\mingw64\include"
+	LIBRARYINSTALLFOLDER = "C:\Program Files (x86)\mingw64\mingw64\lib"
+
+	STATICLIBNAME = libcursedwindows.a
+	SHAREDLIBNAME = libcursedwindows.so
+endif
+
+# Debug/release compiler flags.
+# =============================================================================
+ifeq ($(RELEASE), true)
+	CXXFLAGS += -O3
+endif 
+ifeq ($(DEBUG), true)
+	CXXFLAGS += -g
+endif
+
+# Project folder names.
+# =============================================================================
 HEADERFOLDER = lib
 SOURCEFOLDER = src
 OBJECTFOLDER = obj
 OUTPUTFOLDER = bin
 
-CXXFLAGS += -I $(HEADERFOLDER) 
+CXXFLAGS += -I$(HEADERFOLDER) 
 ARFLAGS = rcs
 
 SOURCES := $(shell find $(SOURCEFOLDER) | grep -F ".cpp")
@@ -35,29 +64,26 @@ help:
 	@echo "    [uninstall] to remove the current installation of the library"
 	@echo "    [clean] to remove/clear build files"
 
-$(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.c
-	$(CC) $(CCFLAGS) -c -o $@ $<
-
 $(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 staticlib: setup $(OBJECTS)
-	ar ${ARFLAGS} $(OUTPUTFOLDER)/$(STATICLIBNAME) $(OBJECTS)
+	$(AR) ${ARFLAGS} $(OUTPUTFOLDER)/$(STATICLIBNAME) $(OBJECTS)
 
 sharedlib: setup $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -shared $(OBJECTS) -o $(OUTPUTFOLDER)/$(SHAREDLIBNAME)
+	$(CXX) $(CXXFLAGS) -shared -o $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(OBJECTS)
 
 documentation:
 	doxygen doxygen.conf
 	firefox doc/index.html
 
 install:
-	sudo cp -r $(HEADERFOLDER) $(INCLUDESINSTALLFOLDER)/cursedwindows
-	sudo cp $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
+	cp -r $(HEADERFOLDER) $(INCLUDESINSTALLFOLDER)/cursedwindows
+	cp $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
 
 uninstall:
-	sudo rm -rf $(INCLUDESINSTALLFOLDER)/cursedwindows
-	sudo rm -rf $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
+	rm -rf $(INCLUDESINSTALLFOLDER)/cursedwindows
+	rm -rf $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
 
 setup:
 	mkdir -p $(OBJECTFOLDER) $(OUTPUTFOLDER)
