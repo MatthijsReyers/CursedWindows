@@ -26,8 +26,8 @@ ifeq ($(shell uname -s),Linux)
 	AR = ar
 	CXX = g++
 	CXXFLAGS = -lncurses -fPIC
-	INCLUDESINSTALLFOLDER = "C:\Program Files (x86)\mingw64\mingw64\include"
-	LIBRARYINSTALLFOLDER = "C:\Program Files (x86)\mingw64\mingw64\lib"
+	INCLUDESINSTALLFOLDER = /usr/include
+	LIBRARYINSTALLFOLDER = /lib
 
 	STATICLIBNAME = libcursedwindows.a
 	SHAREDLIBNAME = libcursedwindows.so
@@ -67,17 +67,19 @@ help:
 $(OBJECTFOLDER)/%.o: $(SOURCEFOLDER)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-staticlib: setup $(OBJECTS)
+$(OUTPUTFOLDER)/$(STATICLIBNAME): setup $(OBJECTS)
 	$(AR) ${ARFLAGS} $(OUTPUTFOLDER)/$(STATICLIBNAME) $(OBJECTS)
 
-sharedlib: setup $(OBJECTS)
+$(OUTPUTFOLDER)/$(SHAREDLIBNAME): setup $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -shared -o $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(OBJECTS)
 
-documentation:
-	doxygen doxygen.conf
-	firefox doc/index.html
+staticlib: $(OUTPUTFOLDER)/$(STATICLIBNAME)
+	@echo "Building static library binary"
 
-install:
+sharedlib: $(OUTPUTFOLDER)/$(SHAREDLIBNAME)
+	@echo "Building shared library binary"
+
+install: $(OUTPUTFOLDER)/$(SHAREDLIBNAME)
 	cp -r $(HEADERFOLDER) $(INCLUDESINSTALLFOLDER)/cursedwindows
 	cp $(OUTPUTFOLDER)/$(SHAREDLIBNAME) $(LIBRARYINSTALLFOLDER)/$(SHAREDLIBNAME)
 
@@ -88,6 +90,10 @@ uninstall:
 setup:
 	mkdir -p $(OBJECTFOLDER) $(OUTPUTFOLDER)
 	mkdir -p obj/layouts obj/widgets
+
+documentation:
+	doxygen doxygen.conf
+	firefox doc/index.html
 
 clean:
 	rm -rf doc/*

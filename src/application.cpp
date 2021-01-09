@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <locale.h>
 #include <iostream>
+#include <sstream>
 
 namespace cw
 {
@@ -14,6 +15,7 @@ namespace cw
     {
         // Setup nCurses.
         setlocale(LC_ALL, "");
+        mousemask(ALL_MOUSE_EVENTS, 0);
         initscr();
         keypad(stdscr, true);
         noecho();
@@ -40,33 +42,37 @@ namespace cw
     int application::start()
     {
         try {
-            int x, y;
-            getmaxyx(stdscr, x, y);
+            // int x, y;
+            // getmaxyx(stdscr, x, y);
             this->running = true;
-            this->mainWidget->resize(0,0,x,y);
-            this->mainWidget->draw();
+            // this->mainWidget->resize(0,0,x,y);
+            // this->mainWidget->draw();
             while (this->running)
             {
                 // Get raw ncurses input.
                 int rawInput = getch();
 
                 // 
-                this->run();
+                // this->run();
 
-                switch (rawInput)
-                {
-                case KEY_RESIZE:
-                    getmaxyx(stdscr, x, y);
-                    this->mainWidget->resize(0,0,x,y);
-                    break;
+                std::stringstream ss;
+                ss << "Recieved: 0x" << std::hex << rawInput << " " << std::dec << rawInput << " " << char(rawInput) << std::endl;
+
+                // switch (rawInput)
+                // {
+                // case KEY_RESIZE:
+                //     getmaxyx(stdscr, x, y);
+                //     this->mainWidget->resize(0,0,x,y);
+                //     break;
                 
-                default:
-                    break;
-                }
+                // default:
+                //     break;
+                // }
 
                 // Do all the drawing stuff.
                 clear();
-                this->mainWidget->draw();
+                // this->mainWidget->draw();
+                mvaddstr(0,0,ss.str().c_str());
                 refresh();
             }
         }
@@ -80,6 +86,7 @@ namespace cw
 
     void application::quit(int code /* = 0 */)
     {
+        endwin();
         this->exitcode = code;
         this->running = false;
     }

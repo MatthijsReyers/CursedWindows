@@ -3,6 +3,7 @@
 #include "widget.hpp"
 
 #include <memory>
+#include <mutex>
 
 namespace cw
 {

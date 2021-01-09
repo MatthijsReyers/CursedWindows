@@ -1,7 +1,7 @@
 
 namespace cw
 {
-    class Event
+    class event
     {
         
     };
